@@ -1,0 +1,101 @@
+aid: vaynermedia
+url: https://raw.githubusercontent.com/api-evangelist/vaynermedia/refs/heads/main/apis.yml
+name: VaynerMedia
+description: >-
+  VaynerMedia is an integrated strategy, creative, and media agency founded by Gary
+  Vaynerchuk, positioning itself as "The Modern Agency of Record" with social media
+  at the center of its practice. Headquartered in New York with roughly 2,000 employees
+  across offices in Los Angeles, Chattanooga, Chicago, Miami, Toronto, Amsterdam, London,
+  Mexico City, Sydney, Mumbai, Tokyo, Kuala Lumpur, Singapore, and Bangkok, the agency
+  serves clients including Bose, Coach, Diageo, Duracell, Indeed, Jimmy John's, Meta,
+  Mondelez, NatWest, PepsiCo, Tinder, and Wingstop. VaynerMedia is the flagship brand
+  of holding company VaynerX, whose portfolio also includes Gallery Media Group, ChukMedia,
+  Tamara Group, Eva Nosidam Productions, VaynerSpeakers, Tingley Lane, and the Marketing
+  for the Now podcast. VaynerMedia is a services agency, not an API or platform company —
+  it does not publish a developer API, SDK, or public technology product, and its public
+  GitHub presence (github.com/vaynermedia and github.com/vaynerx) consists primarily of
+  forked open source libraries and internal build tooling rather than maintained API products.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+type: Index
+access: 3rd-Party
+tags:
+  - Advertising
+  - Agency
+  - Brand Strategy
+  - Content Production
+  - Creative
+  - Influencer Marketing
+  - Marketing
+  - Media Buying
+  - Social Media
+apis: []
+common:
+  - url: https://vaynermedia.com/
+    name: VaynerMedia Website
+    type: Website
+  - url: https://vaynermedia.com/services/
+    name: Services
+    type: Portal
+  - url: https://vaynermedia.com/work/
+    name: Work
+    type: CaseStudies
+  - url: https://vaynermedia.com/insights/
+    name: Insights
+    type: Blog
+  - url: https://vaynermedia.com/offices/
+    name: Offices
+    type: Locations
+  - url: https://vaynermedia.com/careers/
+    name: Careers
+    type: Careers
+  - url: https://vaynermedia.com/connect/
+    name: Connect
+    type: Contact
+  - url: https://vaynerx.com/
+    name: VaynerX (Parent Holding Company)
+    type: ParentCompany
+  - url: https://gallerymediagroup.com/
+    name: Gallery Media Group (VaynerX)
+    type: SisterCompany
+  - url: https://chukmedia.com/
+    name: ChukMedia (VaynerX)
+    type: SisterCompany
+  - url: https://tamaragroup.com/
+    name: Tamara Group (VaynerX)
+    type: SisterCompany
+  - url: https://evanosidam.com/
+    name: Eva Nosidam Productions (VaynerX)
+    type: SisterCompany
+  - url: https://vaynerspeakers.com/
+    name: VaynerSpeakers (VaynerX)
+    type: SisterCompany
+  - url: https://tingleylane.com/
+    name: Tingley Lane (VaynerX)
+    type: SisterCompany
+  - url: https://vaynerx.com/marketing-for-the-now/
+    name: Marketing for the Now (VaynerX)
+    type: Podcast
+  - url: https://github.com/vaynermedia
+    name: VaynerMedia on GitHub
+    type: GitHubOrganization
+  - url: https://github.com/vaynerx
+    name: VaynerX on GitHub
+    type: GitHubOrganization
+  - url: https://www.linkedin.com/company/vaynermedia
+    name: LinkedIn
+    type: LinkedIn
+  - url: https://x.com/vaynermedia
+    name: X (Twitter)
+    type: X
+  - url: https://www.instagram.com/vaynermedia/
+    name: Instagram
+    type: Instagram
+  - url: https://www.facebook.com/vaynermedia
+    name: Facebook
+    type: Facebook
+  - url: https://www.youtube.com/vaynermedia
+    name: YouTube
+    type: YouTube
+created: '2026-05-23'
+modified: '2026-05-23'
+specificationVersion: '0.19'
