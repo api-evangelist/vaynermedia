@@ -15,7 +15,7 @@ description: >-
   it does not publish a developer API, SDK, or public technology product, and its public
   GitHub presence (github.com/vaynermedia and github.com/vaynerx) consists primarily of
   forked open source libraries and internal build tooling rather than maintained API products.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 type: Index
 access: 3rd-Party
 tags:
