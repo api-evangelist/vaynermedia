@@ -30,6 +30,8 @@ tags:
   - Social Media
 apis: []
 common:
+  - type: DomainSecurity
+    url: security/vaynermedia-domain-security.yml
   - url: https://vaynermedia.com/
     name: VaynerMedia Website
     type: Website
