@@ -1,0 +1,71 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  discovery/vaynermedia-wp-json-route-index.json + live probes of vaynermedia.com and
+  status.vaynermedia.com (2026-08-12)
+summary: >-
+  VaynerMedia publishes no API lifecycle commitments of any kind. The content API's version
+  is whatever WordPress core ships; there is no versioning policy, no deprecation policy, no
+  Sunset/Deprecation header practice, no SLA and no status page. This file records those
+  absences with the probes behind them, and deliberately carries NO `type: StatusPage` and
+  NO `type: Deprecation` pointer in apis.yml.
+
+versioning:
+  scheme: namespace-in-path
+  current_version: wp/v2
+  first_seen: 'wp/v2 has been the WordPress core REST namespace since WordPress 4.7 (2016)'
+  policy_published: false
+  policy_url: null
+  note: >-
+    The version is set by the WordPress release VaynerMedia runs, not by VaynerMedia. A core
+    upgrade to a future wp/v3 would change this surface with no notice from the agency.
+
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No RFC 8594 Sunset or Deprecation header was observed on any response. No deprecated
+    operations exist in the derived OpenAPI because the derived surface is WordPress core's
+    current namespace.
+
+sla:
+  published: false
+  url: null
+  note: VaynerMedia is a services agency; it publishes no uptime or latency commitment for its website API.
+
+status_page:
+  present: false
+  url: null
+  probes:
+  - url: https://status.vaynermedia.com/
+    status: 000
+    note: DNS does not resolve.
+  upstream:
+    hosting: WP Engine
+    upstream_status_page: https://wpenginestatus.com/
+    note: >-
+      The site is hosted on WP Engine (x-powered-by: WP Engine). WP Engine publishes its own
+      status page, but that is the host's, not VaynerMedia's, and it is NOT wired as a
+      StatusPage pointer for this provider.
+
+changelog:
+  published: false
+  url: null
+  note: >-
+    No dated API changelog. The site publishes a marketing blog at
+    https://vaynermedia.com/blog/ and a research/reports index at
+    https://vaynermedia.com/reports/, neither of which tracks API change.
+
+content_lifecycle_observed:
+  posts_total: 267
+  pages_total: 51
+  media_total: 1693
+  case_studies_total: 4
+  latest_post_modified: '2026-08-07'
+  note: >-
+    Counts read from X-WP-Total on anonymous collection reads, 2026-08-12. The content
+    surface is actively maintained even though the API around it is unmanaged.

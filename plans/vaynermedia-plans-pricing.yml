@@ -1,0 +1,37 @@
+generated: '2026-08-12'
+method: searched
+source: https://vaynermedia.com/contact-us/
+plan_count: 0
+plans: []
+summary: >-
+  VaynerMedia publishes no pricing of any kind — not for its agency services and not for the
+  WordPress content API its website exposes. It is a full-service agency sold through a
+  contact form and a business-development conversation; engagement scope and fees are set
+  per client and never listed publicly.
+access_model:
+  api_pricing: none
+  api_cost_to_caller: free
+  note: >-
+    The public read surface at vaynermedia.com/wp-json/ is anonymous and free. It is not a
+    commercial product, has no plan, no quota and no billing relationship. Recording
+    plan_count 0 here is a statement about the provider, not about the API being paid.
+services_pricing:
+  published: false
+  mechanism: contact form
+  pages_checked:
+  - url: https://vaynermedia.com/contact-us/
+    status: 200
+    note: New-business contact form. No rate card, no tiers, no minimums.
+  - url: https://vaynermedia.com/integrated/
+    status: 200
+    note: Integrated services overview. Capability copy only, no pricing.
+  - url: https://vaynermedia.com/consulting/
+    status: 200
+    note: Consulting services overview. Capability copy only, no pricing.
+  - url: https://vaynermedia.com/creative/
+    status: 200
+  - url: https://vaynermedia.com/media/
+    status: 200
+gaps:
+- No pricing page exists on vaynermedia.com.
+- No API plans, quotas, or overage terms are published.

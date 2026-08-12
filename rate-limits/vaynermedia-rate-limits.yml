@@ -1,0 +1,62 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  live anonymous responses from https://vaynermedia.com/wp-json/wp/v2/* and
+  https://vaynermedia.com/robots.txt (2026-08-12)
+limit_count: 0
+summary: >-
+  VaynerMedia publishes no API rate limits and returns no rate-limit headers. An agent
+  calling this API has no runtime signal at all — it can only discover a ceiling by hitting
+  one. The only quantitative bound the API enforces is a pagination cap, which is a page-size
+  limit rather than a rate limit and is recorded separately below.
+limits: []
+
+observed_headers:
+  ratelimit_family: none
+  x_ratelimit_family: none
+  retry_after: not observed
+  checked_on:
+  - https://vaynermedia.com/wp-json/wp/v2/posts?per_page=1
+  - https://vaynermedia.com/wp-json/wp/v2/pages?per_page=1
+  - https://vaynermedia.com/wp-json/wp/v2/case_study?per_page=1
+  note: >-
+    Response headers carry only WP Engine edge caching signals (x-cache, x-cacheable,
+    x-cache-group, cache-control max-age=600) and WordPress pagination signals (X-WP-Total,
+    X-WP-TotalPages, Link). No limit, remaining, reset or retry field of any kind.
+
+status_on_exhaustion: unknown
+
+related_bounds:
+- name: per_page ceiling
+  kind: pagination-cap
+  value: 100
+  enforced: true
+  status_when_exceeded: 400
+  error_code: rest_invalid_param
+  evidence: >-
+    GET /wp-json/wp/v2/posts?per_page=999 returns 400 with
+    "per_page must be between 1 (inclusive) and 100 (inclusive)".
+  note: Not a rate limit. Recorded so a caller sizing a crawl knows the real page ceiling.
+- name: robots.txt crawl-delay
+  kind: crawler-courtesy
+  value: 10
+  unit: seconds
+  enforced: false
+  evidence: 'https://vaynermedia.com/robots.txt — "Crawl-delay: 10", "Disallow:" (nothing disallowed).'
+  note: >-
+    A politeness hint to crawlers, not an enforced API limit, and robots.txt does not cover
+    /wp-json/ specifically. It is the closest thing to a published request-pacing statement
+    VaynerMedia makes.
+
+upstream_controls:
+  host: WP Engine
+  note: >-
+    WP Engine applies its own edge protections and can rate-limit or challenge abusive
+    traffic, but nothing about that is published by VaynerMedia or advertised in a response
+    header, so it cannot be recorded as a limit here.
+
+gaps:
+- No published rate limits.
+- No RateLimit-* or X-RateLimit-* response headers.
+- No Retry-After on any observed response.
+- No documented 429 behaviour.

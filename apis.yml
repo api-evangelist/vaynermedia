@@ -14,7 +14,13 @@ description: >-
   for the Now podcast. VaynerMedia is a services agency, not an API or platform company —
   it does not publish a developer API, SDK, or public technology product, and its public
   GitHub presence (github.com/vaynermedia and github.com/vaynerx) consists primarily of
-  forked open source libraries and internal build tooling rather than maintained API products.
+  forked open source libraries and internal build tooling rather than maintained API products. The
+  one machine-readable surface VaynerMedia does serve is its own website: vaynermedia.com runs on
+  self-hosted WordPress at WP Engine and leaves the WordPress REST API open for anonymous reads at
+  vaynermedia.com/wp-json/, with 365 registered routes covering posts, pages, media, taxonomies and
+  the agency's own case_study custom post type. The site also serves a Yoast-generated llms.txt.
+  Neither is a developer product — they are the content surface of a marketing site — but both are
+  real, public and callable, and they are what an agent researching the agency can actually read.
 accessModel:
   pricing: unknown
   onboarding: unknown
@@ -39,31 +45,119 @@ tags:
   - Marketing
   - Media Buying
   - Social Media
-apis: []
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+  - FN: APIs.json
+    email: info@apis.io
+apis:
+  - aid: vaynermedia:wordpress-content-api
+    name: VaynerMedia WordPress Content API
+    description: >-
+      vaynermedia.com is a self-hosted WordPress site on WP Engine, and it leaves the WordPress
+      REST API open for anonymous reads at https://vaynermedia.com/wp-json/. The site's own route
+      index registers 365 routes across 17 namespaces; the portion that is actually callable
+      without credentials is the wp/v2 content surface — posts (267), pages (51), media (1,693),
+      categories, tags, comments, cross-type search (342 indexed records), the type/status/taxonomy
+      registries, and two custom post types the agency registered itself: case_study (its published
+      client case studies) and salient_g_sections. Popup Maker's popups and themes are also public.
+      Writes, templates, menu-items, settings and users are gated (401/403). This is not a developer
+      product and VaynerMedia does not document, version, rate-limit or support it — it is the
+      content surface of the agency's marketing site, and the only callable API the company exposes.
+      The OpenAPI in this repo was derived by API Evangelist from the provider's own /wp-json/ route
+      index; VaynerMedia publishes no OpenAPI, and the only human reference is WordPress core's.
+    humanURL: https://developer.wordpress.org/rest-api/
+    baseURL: https://vaynermedia.com/wp-json
+    tags:
+      - Content
+      - JSON
+      - Marketing
+      - REST
+      - Search
+      - WordPress
+    properties:
+      - type: OpenAPI
+        url: openapi/vaynermedia-wordpress-content-openapi.json
+      - type: Overlay
+        url: overlays/vaynermedia-wordpress-content-overlay.yaml
+      - type: Authentication
+        url: authentication/vaynermedia-authentication.yml
+      - type: Conventions
+        url: conventions/vaynermedia-conventions.yml
+      - type: ErrorCatalog
+        url: errors/vaynermedia-problem-types.yml
+      - type: DataModel
+        url: data-model/vaynermedia-data-model.yml
+      - type: Lifecycle
+        url: lifecycle/vaynermedia-lifecycle.yml
+      - type: RateLimits
+        url: rate-limits/vaynermedia-rate-limits.yml
+      - type: Conformance
+        url: conformance/vaynermedia-conformance.yml
+      - type: AgentSkill
+        url: skills/_index.yml
+      - url: https://vaynermedia.com/wp-json/
+        name: WordPress REST route index (live)
+        type: APIDiscovery
 common:
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
   - type: DomainSecurity
     url: security/vaynermedia-domain-security.yml
+  - type: LLMsTxt
+    url: llms/vaynermedia-llms.txt
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Plans
+    url: plans/vaynermedia-plans-pricing.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
   - url: https://vaynermedia.com/
     name: VaynerMedia Website
     type: Website
-  - url: https://vaynermedia.com/services/
-    name: Services
-    type: Portal
+  - url: https://vaynermedia.com/llms.txt
+    name: llms.txt (live)
+    type: LLMsTxt
+  - url: https://vaynermedia.com/integrated/
+    name: Integrated Services
+    type: Services
   - url: https://vaynermedia.com/work/
     name: Work
     type: CaseStudies
-  - url: https://vaynermedia.com/insights/
-    name: Insights
+  - url: https://vaynermedia.com/blog/
+    name: Blog
     type: Blog
-  - url: https://vaynermedia.com/offices/
-    name: Offices
-    type: Locations
+  - url: https://vaynermedia.com/reports/
+    name: Research & Reports
+    type: Research
   - url: https://vaynermedia.com/careers/
     name: Careers
     type: Careers
-  - url: https://vaynermedia.com/connect/
-    name: Connect
+  - url: https://vaynermedia.com/contact-us/
+    name: Contact Us
     type: Contact
+  - url: https://vaynermedia.com/terms/
+    name: Terms of Use
+    type: TermsOfService
+  - url: https://vaynermedia.com/privacy-policy/
+    name: Privacy Policy
+    type: PrivacyPolicy
+  - url: https://vaynermedia.com/feed/
+    name: VaynerMedia RSS Feed
+    type: RSSFeed
+  - url: https://vaynermedia.com/sitemap_index.xml
+    name: Sitemap Index
+    type: Sitemap
   - url: https://vaynerx.com/
     name: VaynerX (Parent Holding Company)
     type: ParentCompany
@@ -110,5 +204,29 @@ common:
     name: YouTube
     type: YouTube
 created: '2026-05-23'
-modified: '2026-05-23'
+modified: '2026-08-12'
 specificationVersion: '0.19'
+x-enrichment:
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 17
+  pass: local-v1
+x-coverage:
+  state: covered
+  detail: >-
+    STEP 0b contract discovery turned up a real machine-readable surface the previous round
+    missed — https://vaynermedia.com/wp-json/ returns HTTP 200 with a 365-route WordPress REST
+    index, and https://vaynermedia.com/llms.txt returns HTTP 200 in llms.txt format. No developer
+    product, OpenAPI, MCP server, agent card, security.txt or /.well-known/ document exists.
+  evidence:
+    - url: https://vaynermedia.com/wp-json/
+      status: 200
+    - url: https://vaynermedia.com/llms.txt
+      status: 200
+    - url: https://vaynermedia.com/wp-json/wp/v2/case_study?per_page=1
+      status: 200
+    - url: https://vaynermedia.com/openapi.json
+      status: 404
+    - url: https://vaynermedia.com/.well-known/agent-card.json
+      status: 404
+  checked: '2026-08-12'

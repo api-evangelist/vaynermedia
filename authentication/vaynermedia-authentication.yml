@@ -1,0 +1,15 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/vaynermedia-wordpress-content-openapi.json
+summary:
+  types:
+  - http
+schemes:
+- name: applicationPassword
+  type: http
+  scheme: basic
+  description: WordPress Application Passwords. Advertised by the site's own route index (authentication.application-passwords.endpoints.authorization
+    = https://vaynermedia.com/wp-admin/authorize-application.php). Required only for write operations
+    and privileged reads; every operation in this document is callable anonymously.
+  sources:
+  - openapi/vaynermedia-wordpress-content-openapi.json

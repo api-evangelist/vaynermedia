@@ -1,0 +1,89 @@
+generated: '2026-08-12'
+method: derived
+status: candidate
+source: openapi/vaynermedia-wordpress-content-openapi.json
+published_server: null
+searched:
+  official_hosted_server: none
+  note: >-
+    VaynerMedia operates no MCP server. This file is a CANDIDATE tool shape derived from the
+    public WordPress content API, not a server VaynerMedia runs. It carries NO
+    `type: MCPServer` pointer in apis.yml — wiring one would credit an agency with an agent
+    surface it does not operate.
+  probes:
+  - url: https://vaynermedia.com/mcp
+    method: POST tools/list
+    status: 404
+  - url: https://vaynermedia.com/api/mcp
+    method: POST tools/list
+    status: 404
+  - url: https://mcp.vaynermedia.com/
+    method: POST tools/list
+    status: 000
+    note: host does not resolve
+  - url: https://vaynermedia.com/.well-known/oauth-protected-resource
+    status: 404
+  third_party: []
+
+transport: null
+auth:
+  anonymous: true
+  note: >-
+    Every candidate tool below maps to an operation that is callable with no credentials, so
+    a server built from this shape would need no auth for reads.
+
+candidate_tools:
+- name: search_vaynermedia_content
+  maps_to: GET /wp/v2/search
+  rest_operation_id: list_search
+  description: Search across every public content type on vaynermedia.com and get back id, title, url, type and subtype.
+- name: list_posts
+  maps_to: GET /wp/v2/posts
+  rest_operation_id: list_posts
+  description: List blog, press and education posts, filterable by category, tag, date window and search term.
+- name: get_post
+  maps_to: GET /wp/v2/posts/{id}
+  rest_operation_id: get_posts
+  description: Retrieve one post with its rendered title, content and excerpt.
+- name: list_case_studies
+  maps_to: GET /wp/v2/case_study
+  rest_operation_id: list_case_study
+  description: List VaynerMedia client case studies (the agency's own custom post type).
+- name: get_case_study
+  maps_to: GET /wp/v2/case_study/{id}
+  rest_operation_id: get_case_study
+  description: Retrieve one case study with its full rendered body.
+- name: list_pages
+  maps_to: GET /wp/v2/pages
+  rest_operation_id: list_pages
+  description: List static pages — service pages, office pages, legal pages, reports and events indexes.
+- name: get_page
+  maps_to: GET /wp/v2/pages/{id}
+  rest_operation_id: get_pages
+  description: Retrieve one page.
+- name: list_categories
+  maps_to: GET /wp/v2/categories
+  rest_operation_id: list_categories
+  description: List post categories with their post counts.
+- name: list_tags
+  maps_to: GET /wp/v2/tags
+  rest_operation_id: list_tags
+  description: List post tags with their post counts.
+- name: list_media
+  maps_to: GET /wp/v2/media
+  rest_operation_id: list_media
+  description: List media library attachments and their source URLs.
+- name: list_content_types
+  maps_to: GET /wp/v2/types
+  rest_operation_id: list_types
+  description: Discover which content types this site exposes, including the site-specific ones.
+
+coverage:
+  candidate_tools: 11
+  backing_operations: 11
+  openapi_operations_total: 28
+  note: >-
+    The candidate set covers the operations an agent would actually reach for. Registry
+    endpoints (statuses, taxonomies), the popup/theme/block/global-section collections and
+    the per-type item lookups are deliberately left out of the tool shape; they remain
+    reachable through the REST surface.

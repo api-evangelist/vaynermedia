@@ -1,0 +1,149 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  discovery/vaynermedia-wp-json-route-index.json +
+  openapi/vaynermedia-wordpress-content-openapi.json + live response headers observed on
+  https://vaynermedia.com/wp-json/wp/v2/posts (2026-08-12)
+docs: https://developer.wordpress.org/rest-api/using-the-rest-api/
+summary: >-
+  VaynerMedia does not author API conventions — it inherits the WordPress REST API's. This
+  file records the conventions actually observed on the wire at vaynermedia.com/wp-json/,
+  cross-checked against the site's own route index. Upstream reference documentation is
+  WordPress core's, not VaynerMedia's.
+
+auth_style:
+  anonymous_reads: true
+  scheme: WordPress Application Passwords (HTTP Basic) for writes and privileged reads
+  authorization_endpoint: https://vaynermedia.com/wp-admin/authorize-application.php
+  advertised_by: /wp-json/ root document, authentication.application-passwords
+  note: >-
+    Every operation in openapi/vaynermedia-wordpress-content-openapi.json returned 200
+    with no credentials. Write methods are registered on the same routes but reject
+    anonymous callers; the Allow header on an anonymous GET is "GET" only.
+  see: authentication/vaynermedia-authentication.yml
+
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No idempotency key, no request de-duplication, no retry semantics are documented or
+    advertised. The public surface is read-only for anonymous callers, so the question is
+    largely moot. NO `type: Idempotency` pointer is wired for this provider.
+
+pagination:
+  style: page-number
+  params:
+  - name: page
+    type: integer
+    default: 1
+    description: Current page of the collection.
+  - name: per_page
+    type: integer
+    default: 10
+    minimum: 1
+    maximum: 100
+    description: Maximum number of items per page. Values above 100 return HTTP 400 rest_invalid_param.
+  - name: offset
+    type: integer
+    description: Offset the result set by a specific number of items (most collections; not categories).
+  response_headers:
+  - name: X-WP-Total
+    description: Total number of matching records.
+    observed: 'X-WP-Total: 267 on /wp/v2/posts'
+  - name: X-WP-TotalPages
+    description: Total number of pages at the requested per_page.
+  - name: Link
+    description: RFC 8288 link header carrying rel="next" and rel="prev".
+    observed: '<https://vaynermedia.com/wp-json/wp/v2/posts?per_page=1&page=2>; rel="next"'
+  cors_exposed: 'Access-Control-Expose-Headers: X-WP-Total, X-WP-TotalPages, Link'
+
+field_selection:
+  sparse_fields:
+    param: _fields
+    description: Comma-separated list of top-level response fields to return.
+  embedding:
+    param: _embed
+    description: Inline embeddable linked resources (author, featured media, terms) under _embedded.
+  envelope:
+    param: _envelope
+    description: Wrap the body, status and headers into a single JSON envelope for clients that cannot read headers.
+  context:
+    param: context
+    values: [view, embed, edit]
+    default: view
+    description: Scope of the request; determines which fields appear. `edit` requires authentication.
+  note: >-
+    _fields, _embed and _envelope are WordPress core global parameters. They are not listed
+    in the per-route args of the site's route index, so they are recorded here rather than
+    invented into the derived OpenAPI.
+
+filtering_and_search:
+  search_param: search
+  search_columns: [post_title, post_content, post_excerpt]
+  ordering:
+    param: orderby
+    values_posts: [author, date, id, include, modified, parent, relevance, slug, include_slugs, title]
+    direction_param: order
+    direction_values: [asc, desc]
+  date_filters: [after, before, modified_after, modified_before]
+  id_filters: [include, exclude, slug]
+  taxonomy_filters: [categories, categories_exclude, tags, tags_exclude, tax_relation]
+
+metadata:
+  supported: partial
+  note: >-
+    A `meta` object is returned on taxonomy and post objects, but no registered custom meta
+    fields are exposed on the public read surface.
+
+request_tracing:
+  request_id_header: null
+  note: >-
+    No request-id or correlation header is returned. Responses carry WP Engine edge headers
+    (x-cache, x-cache-group, x-cacheable) but nothing a caller can quote in a support ticket.
+
+caching:
+  cache_control: 'max-age=600, must-revalidate'
+  edge: 'WP Engine — x-powered-by: WP Engine, x-cacheable: SHORT, x-cache: HIT'
+  vary: 'Accept-Encoding, Cookie'
+  note: Ten-minute edge TTL on collection reads; conditional requests are not advertised (no ETag observed).
+
+versioning:
+  scheme: namespace-in-path
+  current: wp/v2
+  namespaces_registered: 17
+  note: >-
+    Version lives in the URL namespace (/wp-json/wp/v2/). The site also registers 16 other
+    plugin namespaces (yoast/v1, popup-maker/v2, redirection/v1, google-site-kit/v1,
+    wpe/cache-plugin/v1, two-factor/1.0, wp-abilities/v1 and others) which are almost all
+    authenticated administrative surfaces, not public API versions.
+  see: lifecycle/vaynermedia-lifecycle.yml
+
+error_envelope:
+  format: wordpress-wp-error
+  rfc9457: false
+  content_type: application/json
+  shape:
+    code: machine-readable string, e.g. rest_no_route
+    message: human-readable string
+    data.status: HTTP status integer
+    data.params: per-parameter validation messages (validation errors only)
+    data.details: per-parameter error objects (validation errors only)
+  see: errors/vaynermedia-problem-types.yml
+
+rate_limit_signaling:
+  headers: none
+  status_on_exhaustion: unknown
+  note: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After header was observed on any anonymous
+    response. See rate-limits/vaynermedia-rate-limits.yml.
+
+cors:
+  allow_headers: 'Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type'
+  expose_headers: 'X-WP-Total, X-WP-TotalPages, Link'
+  note: Standard WordPress REST CORS posture.
+
+robots:
+  x_robots_tag: noindex
+  note: >-
+    API responses are served with an X-Robots-Tag of noindex — readable by agents, excluded
+    from search indexes.

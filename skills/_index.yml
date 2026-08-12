@@ -1,0 +1,28 @@
+generated: '2026-08-12'
+method: generated
+source: openapi/vaynermedia-wordpress-content-openapi.json
+summary: >-
+  Packaged Agent Skills for the public VaynerMedia WordPress content API. Every operationId
+  referenced in these skills was verified present in the derived OpenAPI. VaynerMedia does
+  not publish skills, an AGENTS.md or any agent guidance of its own — these are authored by
+  API Evangelist from the observed contract.
+skills:
+- name: vaynermedia-search-content
+  file: vaynermedia-search-content.md
+  description: >-
+    Search everything VaynerMedia publishes from one endpoint, then fetch the full record
+    from whichever collection the hit came from.
+  operations: [list_search, list_types, list_posts, get_posts, list_pages, get_pages, list_case_study]
+- name: vaynermedia-harvest-case-studies
+  file: vaynermedia-harvest-case-studies.md
+  description: >-
+    Pull the agency's published client case studies — its own custom post type — with bodies,
+    taxonomy and hero imagery.
+  operations: [list_case_study, get_case_study, list_categories, list_tags, list_media]
+provider_published_skills:
+  found: false
+  probes:
+  - url: https://vaynermedia.com/AGENTS.md
+    status: 404
+  - url: https://vaynermedia.com/skills
+    status: 404

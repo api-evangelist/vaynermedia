@@ -1,0 +1,78 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the VaynerMedia WordPress Content API
+  version: 1.0.0
+extends: ../openapi/vaynermedia-wordpress-content-openapi.json
+x-generated: '2026-08-12'
+x-method: generated
+x-source: >-
+  API Evangelist enrichment pass. Captures the WordPress core global parameters and the
+  runtime semantics observed on vaynermedia.com that the site's own /wp-json/ route index
+  does not declare per-route. The underlying OpenAPI is never mutated.
+actions:
+- target: $.info
+  update:
+    x-api-evangelist-profile: https://apis.io/provider/vaynermedia/
+    x-contract-provenance: >-
+      Derived by API Evangelist from https://vaynermedia.com/wp-json/ on 2026-08-12.
+      VaynerMedia publishes no OpenAPI of its own.
+    x-agent-notes: >-
+      Read-only and anonymous. Start at GET /wp/v2/search to find content across types, then
+      fetch the item from the collection named by its `subtype`. Use _embed to resolve
+      author, featured media and terms in one round trip — the author edge cannot be walked
+      directly because /wp/v2/users is blocked at the edge.
+
+- target: $.paths.*.get
+  update:
+    x-runtime-semantics:
+      auth_required: false
+      idempotent: true
+      safe: true
+      cache_control: 'max-age=600, must-revalidate'
+      rate_limit_headers: none
+      error_envelope: wordpress-wp-error
+
+- target: $.paths[?(@.get.parameters)].get
+  update:
+    x-global-parameters:
+    - name: _fields
+      in: query
+      description: Comma-separated list of top-level response fields to return. WordPress core global parameter.
+      schema:
+        type: string
+    - name: _embed
+      in: query
+      description: Inline embeddable linked resources (author, featured media, terms) under _embedded.
+      schema:
+        type: string
+    - name: _envelope
+      in: query
+      description: Wrap body, status and headers into a single JSON envelope.
+      schema:
+        type: boolean
+    - name: _method
+      in: query
+      description: Method override for clients that cannot send arbitrary HTTP verbs.
+      schema:
+        type: string
+
+- target: $.components.schemas.Error
+  update:
+    x-error-codes:
+    - rest_no_route
+    - rest_invalid_param
+    - rest_out_of_bounds
+    - rest_post_invalid_id
+    - rest_cannot_manage_templates
+    - rest_cannot_view
+    - rest_forbidden
+    x-catalog: ../errors/vaynermedia-problem-types.yml
+    x-edge-exception: >-
+      /wp/v2/users returns an nginx HTML 403 rather than this JSON envelope — WP Engine
+      blocks author enumeration ahead of WordPress.
+
+- target: $.servers[0]
+  update:
+    x-hosting: WP Engine
+    x-edge-headers: [x-cache, x-cacheable, x-cache-group, x-powered-by]
+    x-status-page: none

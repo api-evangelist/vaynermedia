@@ -1,0 +1,211 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  openapi/vaynermedia-wordpress-content-openapi.json +
+  discovery/vaynermedia-wp-json-route-index.json + live object samples from
+  https://vaynermedia.com/wp-json/wp/v2/* (2026-08-12)
+docs: https://developer.wordpress.org/rest-api/reference/
+summary: >-
+  Entity graph of the public VaynerMedia content API. Relationships are derived from the
+  id-reference fields that appear on live objects and from the taxonomy filter parameters the
+  site's own route index registers on each collection. Two of these entities are
+  VaynerMedia-specific custom post types (case_study, salient_g_sections); the rest are
+  WordPress core.
+
+id_scheme:
+  style: integer
+  prefixes: none
+  note: >-
+    All object ids are plain WordPress integers with no type prefix, so an id is only
+    meaningful together with the collection it came from. Ids are shared across post types
+    (posts, pages, case_study and popups all draw from the same wp_posts id sequence), so an
+    id is unique globally but a caller cannot tell the type from the id alone.
+
+entities:
+- name: post
+  collection: /wp/v2/posts
+  count_observed: 267
+  description: Blog posts, press mentions and educational articles published on vaynermedia.com.
+  key_fields: [id, date, modified, slug, status, link, title.rendered, content.rendered, excerpt.rendered, author, featured_media, categories, tags, yoast_head_json]
+
+- name: page
+  collection: /wp/v2/pages
+  count_observed: 51
+  description: Static pages — service pages, office pages, legal pages, the reports and events indexes.
+  key_fields: [id, date, modified, slug, status, link, title.rendered, content.rendered, parent, menu_order, featured_media]
+
+- name: case_study
+  collection: /wp/v2/case_study
+  count_observed: 4
+  custom_post_type: true
+  description: >-
+    VaynerMedia client case studies (Mug Root Beer, Opendoor, Jimmy John's, Indeed NL).
+    Registered by the site via Custom Post Type UI (cptui/v1 namespace), not by WordPress core.
+  key_fields: [id, date, modified, slug, link, title.rendered, content.rendered, featured_media, categories, tags]
+
+- name: media
+  collection: /wp/v2/media
+  count_observed: 1693
+  description: Media library attachments — images, video and documents backing posts, pages and case studies.
+  key_fields: [id, slug, media_type, mime_type, source_url, media_details, post, alt_text]
+
+- name: category
+  collection: /wp/v2/categories
+  count_observed: 9
+  taxonomy: category
+  description: Post categories — In the Press, Blog, Education, Featured, News, B2B and others.
+  key_fields: [id, count, name, slug, parent, link, taxonomy]
+
+- name: tag
+  collection: /wp/v2/tags
+  count_observed: 41
+  taxonomy: post_tag
+  description: Post tags — office and region tags (NYC, VMNY, APAC, Global) and topical tags.
+  key_fields: [id, count, name, slug, link, taxonomy]
+
+- name: comment
+  collection: /wp/v2/comments
+  count_observed: 5
+  description: Approved comments on posts.
+  key_fields: [id, post, parent, author_name, date, content.rendered, status, type]
+
+- name: popup
+  collection: /wp/v2/popups
+  count_observed: 12
+  custom_post_type: true
+  description: >-
+    Popup Maker popups — the report download and newsletter gates (Profound Report, Anti
+    Trends Report, The Chat Effect and others). These are the site's lead-capture surfaces.
+  key_fields: [id, slug, title.rendered, content.rendered, popup_theme]
+
+- name: popup_theme
+  collection: /wp/v2/popup-themes
+  count_observed: 8
+  custom_post_type: true
+  description: Popup Maker themes (Light Box, Enterprise Blue, Default Theme, Hello Box, Cutting Edge).
+  key_fields: [id, slug, title.rendered]
+
+- name: block
+  collection: /wp/v2/blocks
+  count_observed: 1
+  description: Reusable editor blocks shared across pages.
+  key_fields: [id, slug, title.rendered, content.rendered]
+
+- name: salient_g_section
+  collection: /wp/v2/salient_g_sections
+  count_observed: 1
+  custom_post_type: true
+  description: Salient theme global sections — reusable layout fragments registered by the site theme.
+  key_fields: [id, slug, title.rendered, content.rendered]
+
+- name: type
+  collection: /wp/v2/types
+  description: Registry of registered post types. The discovery entity — read it to learn what content types this site exposes.
+  key_fields: [slug, name, description, hierarchical, rest_base, taxonomies]
+
+- name: status
+  collection: /wp/v2/statuses
+  description: Registry of registered post statuses.
+  key_fields: [slug, name, public, queryable]
+
+- name: taxonomy
+  collection: /wp/v2/taxonomies
+  description: Registry of registered taxonomies and which types they apply to.
+  key_fields: [slug, name, types, rest_base, hierarchical]
+
+- name: search_result
+  collection: /wp/v2/search
+  count_observed: 342
+  description: >-
+    Flattened cross-type search index. The only entity that spans post types, and the
+    cheapest single entry point for an agent that does not know which collection to read.
+  key_fields: [id, title, url, type, subtype]
+
+relationships:
+- from: post
+  to: category
+  kind: has_many
+  via: categories
+  filterable_by: 'categories, categories_exclude, tax_relation'
+- from: post
+  to: tag
+  kind: has_many
+  via: tags
+  filterable_by: 'tags, tags_exclude, tax_relation'
+- from: post
+  to: media
+  kind: has_one
+  via: featured_media
+- from: post
+  to: comment
+  kind: has_many
+  via: 'comment.post -> post.id'
+- from: post
+  to: user
+  kind: belongs_to
+  via: author
+  note: >-
+    The author id is present on post objects, but /wp/v2/users returns HTTP 403 at the WP
+    Engine edge, so this relationship cannot be resolved anonymously. Use _embed to get the
+    author object inlined instead.
+- from: page
+  to: page
+  kind: belongs_to
+  via: parent
+- from: page
+  to: media
+  kind: has_one
+  via: featured_media
+- from: case_study
+  to: category
+  kind: has_many
+  via: categories
+- from: case_study
+  to: tag
+  kind: has_many
+  via: tags
+- from: case_study
+  to: media
+  kind: has_one
+  via: featured_media
+- from: media
+  to: post
+  kind: belongs_to
+  via: post
+- from: comment
+  to: post
+  kind: belongs_to
+  via: post
+- from: comment
+  to: comment
+  kind: belongs_to
+  via: parent
+- from: category
+  to: category
+  kind: belongs_to
+  via: parent
+- from: popup
+  to: popup_theme
+  kind: belongs_to
+  via: popup_theme
+- from: type
+  to: taxonomy
+  kind: has_many
+  via: taxonomies
+- from: search_result
+  to: post
+  kind: has_one
+  via: 'id + subtype'
+  note: subtype names the source collection; id is the object id inside it.
+
+traversal_notes:
+- >-
+  _embed inlines author, featured media and terms in one round trip and is the correct way to
+  walk this graph — the alternative is N+1 reads, and the author edge cannot be walked at all
+  because /wp/v2/users is blocked at the edge.
+- >-
+  Ids are shared across post types. Do not treat an id as a key into a single collection;
+  always carry the collection with it.
+- >-
+  /wp/v2/types is the discovery root. It names case_study and salient_g_sections, the two
+  entities that are specific to VaynerMedia rather than to WordPress.

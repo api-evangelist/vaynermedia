@@ -1,0 +1,103 @@
+generated: '2026-08-12'
+method: probed
+source: >-
+  live error responses observed on https://vaynermedia.com/wp-json/ (2026-08-12), plus
+  derived from openapi/vaynermedia-wordpress-content-openapi.json
+docs: https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/
+format: wordpress-wp-error
+rfc9457: false
+content_type: application/json
+summary: >-
+  The VaynerMedia WordPress REST API returns the WordPress WP_Error envelope, not RFC 9457
+  problem+json. Every entry below was captured from a real response against
+  vaynermedia.com — no error code is listed here that was not observed or that the site's
+  own route index does not make reachable.
+
+envelope:
+  fields:
+  - name: code
+    type: string
+    description: Machine-readable error code. Stable across WordPress versions; the field an agent should branch on.
+  - name: message
+    type: string
+    description: Human-readable message. Localized; do not branch on it.
+  - name: data.status
+    type: integer
+    description: HTTP status, repeated inside the body.
+  - name: data.params
+    type: object
+    description: Map of parameter name to validation message. Present on rest_invalid_param only.
+  - name: data.details
+    type: object
+    description: Map of parameter name to a nested error object with its own code/message. Present on rest_invalid_param only.
+
+problem_types:
+- code: rest_no_route
+  status: 404
+  title: No matching route
+  detail: No route was found matching the URL and request method.
+  observed_at: https://vaynermedia.com/wp-json/wp/v2/nonexistent
+  remediation: >-
+    Fetch https://vaynermedia.com/wp-json/ and read routes[] — it is the authoritative list
+    of 365 registered routes. Check the HTTP method too; several routes register GET only
+    for anonymous callers.
+  verbatim: '{"code":"rest_no_route","message":"No route was found matching the URL and request method.","data":{"status":404}}'
+
+- code: rest_invalid_param
+  status: 400
+  title: Invalid parameter
+  detail: One or more query parameters failed validation. data.params names each offending parameter.
+  observed_at: https://vaynermedia.com/wp-json/wp/v2/posts?per_page=999
+  remediation: >-
+    Read data.details[<param>].code for the specific failure (e.g. rest_out_of_bounds).
+    per_page must be 1-100 inclusive; page must be >= 1.
+  verbatim: '{"code":"rest_invalid_param","message":"Invalid parameter(s): per_page","data":{"status":400,"params":{"per_page":"per_page must be between 1 (inclusive) and 100 (inclusive)"}}}'
+  nested_codes:
+  - code: rest_out_of_bounds
+    description: Numeric parameter fell outside the registered minimum/maximum.
+
+- code: rest_post_invalid_id
+  status: 404
+  title: Invalid post ID
+  detail: The requested id does not resolve to a readable post of that type.
+  observed_at: https://vaynermedia.com/wp-json/wp/v2/posts/1
+  remediation: >-
+    List the collection first and read ids from it. Ids are not contiguous — the site's
+    lowest published post id is well above 1.
+  verbatim: '{"code":"rest_post_invalid_id","message":"Invalid post ID.","data":{"status":404}}'
+
+- code: rest_cannot_manage_templates
+  status: 401
+  title: Not allowed to access templates
+  detail: The templates and template-parts routes are registered but require an authenticated editor.
+  observed_at: https://vaynermedia.com/wp-json/wp/v2/templates
+  remediation: >-
+    Authenticate with an Application Password, or stay on the public content collections.
+    These routes are excluded from the derived OpenAPI for exactly this reason.
+
+- code: rest_cannot_view
+  status: 401
+  title: Not allowed to view
+  detail: Returned by menu-items and other editor-scoped collections for anonymous callers.
+  observed_at: https://vaynermedia.com/wp-json/wp/v2/menu-items
+
+- code: rest_forbidden
+  status: 401
+  title: Forbidden
+  detail: Returned by /wp/v2/settings and other administrative routes for anonymous callers.
+  observed_at: https://vaynermedia.com/wp-json/wp/v2/settings
+
+edge_errors:
+- status: 403
+  title: Blocked at the edge
+  detail: >-
+    /wp/v2/users returns an nginx HTML 403 rather than a JSON WP_Error — WP Engine blocks
+    author enumeration ahead of WordPress. Callers must be prepared for a non-JSON body on
+    this route.
+  observed_at: https://vaynermedia.com/wp-json/wp/v2/users
+  content_type: text/html
+
+gaps:
+- The API does not emit RFC 9457 application/problem+json.
+- No error reference page is published by VaynerMedia; the upstream WordPress handbook is the only documentation.
+- Error responses carry no request id, so a failure cannot be correlated with a support ticket.
