@@ -61,55 +61,347 @@ maintainers:
   - FN: APIs.json
     email: info@apis.io
 apis:
-  - aid: vaynermedia:wordpress-content-api
-    name: VaynerMedia WordPress Content API
-    description: >-
-      vaynermedia.com is a self-hosted WordPress site on WP Engine, and it leaves the WordPress
-      REST API open for anonymous reads at https://vaynermedia.com/wp-json/. The site's own route
-      index registers 365 routes across 17 namespaces; the portion that is actually callable
-      without credentials is the wp/v2 content surface — posts (267), pages (51), media (1,693),
-      categories, tags, comments, cross-type search (342 indexed records), the type/status/taxonomy
-      registries, and two custom post types the agency registered itself: case_study (its published
-      client case studies) and salient_g_sections. Popup Maker's popups and themes are also public.
-      Writes, templates, menu-items, settings and users are gated (401/403). This is not a developer
-      product and VaynerMedia does not document, version, rate-limit or support it — it is the
-      content surface of the agency's marketing site, and the only callable API the company exposes.
-      The OpenAPI in this repo was derived by API Evangelist from the provider's own /wp-json/ route
-      index; VaynerMedia publishes no OpenAPI, and the only human reference is WordPress core's.
-    humanURL: https://developer.wordpress.org/rest-api/
-    baseURL: https://vaynermedia.com/wp-json
-    tags:
-      - Content
-      - JSON
-      - Marketing
-      - REST
-      - Search
-      - WordPress
-    properties:
-      - type: OpenAPI
-        url: openapi/vaynermedia-wordpress-content-openapi.json
-      - type: Overlay
-        url: overlays/vaynermedia-wordpress-content-overlay.yaml
-      - type: Authentication
-        url: authentication/vaynermedia-authentication.yml
-      - type: Conventions
-        url: conventions/vaynermedia-conventions.yml
-      - type: ErrorCatalog
-        url: errors/vaynermedia-problem-types.yml
-      - type: DataModel
-        url: data-model/vaynermedia-data-model.yml
-      - type: Lifecycle
-        url: lifecycle/vaynermedia-lifecycle.yml
-      - type: RateLimits
-        url: rate-limits/vaynermedia-rate-limits.yml
-      - type: Conformance
-        url: conformance/vaynermedia-conformance.yml
-      - type: AgentSkill
-        url: skills/_index.yml
-      - url: https://vaynermedia.com/wp-json/
-        name: WordPress REST route index (live)
-        type: APIDiscovery
+- aid: vaynermedia:vaynermedia-blocks-api
+  name: VaynerMedia Blocks API
+  description: Salient theme global sections (custom post type).
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Blocks
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-blocks-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-casestudies-api
+  name: VaynerMedia Case Studies API
+  description: VaynerMedia client case studies (custom post type).
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - CaseStudies
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-casestudies-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-categories-api
+  name: VaynerMedia Categories API
+  description: Post categories taxonomy.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-categories-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-comments-api
+  name: VaynerMedia Comments API
+  description: Approved comments.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Comments
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-comments-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-media-api
+  name: VaynerMedia Media API
+  description: Media library attachments (images, video, documents).
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Media
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-media-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-pages-api
+  name: VaynerMedia Pages API
+  description: Static pages on vaynermedia.com.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-pages-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-popups-api
+  name: VaynerMedia Popups API
+  description: Popup Maker themes.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Popups
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-popups-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-posts-api
+  name: VaynerMedia Posts API
+  description: Blog posts and articles published on vaynermedia.com.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Posts
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-posts-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-search-api
+  name: VaynerMedia Search API
+  description: Cross-content-type search index.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-search-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-statuses-api
+  name: VaynerMedia Statuses API
+  description: Registered post statuses.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Statuses
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-statuses-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-tags-api
+  name: VaynerMedia Tags API
+  description: Post tags taxonomy.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-tags-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-taxonomies-api
+  name: VaynerMedia Taxonomies API
+  description: Registered taxonomies.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Taxonomies
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-taxonomies-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-types-api
+  name: VaynerMedia Types API
+  description: Registered post types.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Types
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-types-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
 common:
+  - type: Overlay
+    url: overlays/vaynermedia-wordpress-content-overlay.yaml
   - type: Authentication
     url: authentication/vaynermedia-authentication.yml
   - type: DomainSecurity
