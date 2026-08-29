@@ -21,6 +21,18 @@ description: >-
   the agency's own case_study custom post type. The site also serves a Yoast-generated llms.txt.
   Neither is a developer product — they are the content surface of a marketing site — but both are
   real, public and callable, and they are what an agent researching the agency can actually read.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: unknown
