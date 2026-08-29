@@ -1,5 +1,8 @@
 aid: vaynermedia
 url: https://raw.githubusercontent.com/api-evangelist/vaynermedia/refs/heads/main/apis.yml
+x-api-posture: no-product-api
+x-api-posture-basis: observed
+x-api-posture-note: "VaynerMedia is a services agency, not an API or platform company — it does not publish a developer API, SDK, or public technology product, and its public GitHub presence (github.com/vaynermedia and gi"
 name: VaynerMedia
 description: >-
   VaynerMedia is an integrated strategy, creative, and media agency founded by Gary
