@@ -1,0 +1,185 @@
+openapi: 3.2.0
+info:
+  title: VaynerMedia WordPress Content Search API
+  version: wp/v2
+  summary: Public read surface of the WordPress REST API served at vaynermedia.com/wp-json/.
+  description: 'VaynerMedia runs vaynermedia.com on self-hosted WordPress (WP Engine) and leaves the WordPress REST API open for anonymous reads. This document describes the portion of that API that is actually callable without credentials: the wp/v2 content collections, the site''s two custom post types (case_study, salient_g_sections), the Popup Maker types, and the registry endpoints.
+
+
+    It was DERIVED from the provider''s own machine-readable route index at https://vaynermedia.com/wp-json/ (365 registered routes) on 2026-08-12 — every path, parameter, type, default and enum below is copied from that document. VaynerMedia does not publish an OpenAPI itself, and this is not a product API: it is the content surface of the agency''s marketing site. Write methods (POST/PUT/PATCH/DELETE) are registered but reject anonymous callers, and are deliberately excluded. Routes that returned 401/403 anonymously (templates, template-parts, menu-items, settings, navigation revisions, users) are excluded for the same reason.'
+  contact:
+    name: VaynerMedia
+    url: https://vaynermedia.com/connect/
+  x-derived-from: https://vaynermedia.com/wp-json/
+  x-derived-on: '2026-08-12'
+  x-upstream-documentation: https://developer.wordpress.org/rest-api/
+servers:
+- url: https://vaynermedia.com/wp-json
+  description: Production WordPress REST API for vaynermedia.com
+security: []
+tags:
+- name: Search
+  description: Cross-content-type search index.
+paths:
+  /wp/v2/search:
+    get:
+      operationId: list_search
+      summary: List search
+      description: Cross-content-type search index. Read-only for anonymous callers; the collection also accepts POST for authenticated editors, which is not documented here.
+      tags:
+      - Search
+      parameters:
+      - name: context
+        in: query
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          default: view
+      - name: exclude
+        in: query
+        description: Ensure result set excludes specific IDs.
+        style: form
+        explode: false
+        schema:
+          type: array
+          default: []
+          items:
+            type: integer
+      - name: include
+        in: query
+        description: Limit result set to specific IDs.
+        style: form
+        explode: false
+        schema:
+          type: array
+          default: []
+          items:
+            type: integer
+      - name: page
+        in: query
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: subtype
+        in: query
+        description: Limit results to items of one or more object subtypes.
+        style: form
+        explode: false
+        schema:
+          type: array
+          default: any
+          items:
+            type: string
+            enum:
+            - post
+            - page
+            - case_study
+            - popup
+            - popup_theme
+            - category
+            - post_tag
+            - any
+      - name: type
+        in: query
+        description: Limit results to items of an object type.
+        schema:
+          type: string
+          enum:
+          - post
+          - term
+          - post-format
+          default: post
+      responses:
+        '200':
+          description: A list of search.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel=next / rel=prev).
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+      security:
+      - {}
+components:
+  responses:
+    Error:
+      description: WordPress error envelope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      description: WordPress REST API error envelope (WP_Error serialized to JSON).
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_no_route.
+        message:
+          type: string
+          description: Human-readable error message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+            params:
+              type: object
+              description: Per-parameter validation messages, when present.
+            details:
+              type: object
+              description: Per-parameter error objects, when present.
+          required:
+          - status
+      required:
+      - code
+      - message
+      examples:
+      - code: rest_no_route
+        message: No route was found matching the URL and request method.
+        data:
+          status: 404
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress Application Passwords. Advertised by the site's own route index (authentication.application-passwords.endpoints.authorization = https://vaynermedia.com/wp-admin/authorize-application.php). Required only for write operations and privileged reads; every operation in this document is callable anonymously.

@@ -1,0 +1,372 @@
+openapi: 3.2.0
+info:
+  title: VaynerMedia WordPress Content Case Studies API
+  version: wp/v2
+  summary: Public read surface of the WordPress REST API served at vaynermedia.com/wp-json/.
+  description: 'VaynerMedia runs vaynermedia.com on self-hosted WordPress (WP Engine) and leaves the WordPress REST API open for anonymous reads. This document describes the portion of that API that is actually callable without credentials: the wp/v2 content collections, the site''s two custom post types (case_study, salient_g_sections), the Popup Maker types, and the registry endpoints.
+
+
+    It was DERIVED from the provider''s own machine-readable route index at https://vaynermedia.com/wp-json/ (365 registered routes) on 2026-08-12 — every path, parameter, type, default and enum below is copied from that document. VaynerMedia does not publish an OpenAPI itself, and this is not a product API: it is the content surface of the agency''s marketing site. Write methods (POST/PUT/PATCH/DELETE) are registered but reject anonymous callers, and are deliberately excluded. Routes that returned 401/403 anonymously (templates, template-parts, menu-items, settings, navigation revisions, users) are excluded for the same reason.'
+  contact:
+    name: VaynerMedia
+    url: https://vaynermedia.com/connect/
+  x-derived-from: https://vaynermedia.com/wp-json/
+  x-derived-on: '2026-08-12'
+  x-upstream-documentation: https://developer.wordpress.org/rest-api/
+servers:
+- url: https://vaynermedia.com/wp-json
+  description: Production WordPress REST API for vaynermedia.com
+security: []
+tags:
+- name: CaseStudies
+  description: VaynerMedia client case studies (custom post type).
+paths:
+  /wp/v2/case_study:
+    get:
+      operationId: list_case_study
+      summary: List case study
+      description: VaynerMedia client case studies (custom post type). Read-only for anonymous callers; the collection also accepts POST for authenticated editors, which is not documented here.
+      tags:
+      - CaseStudies
+      parameters:
+      - name: after
+        in: query
+        description: Limit response to posts published after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: author
+        in: query
+        description: Limit result set to posts assigned to specific authors.
+        style: form
+        explode: false
+        schema:
+          type: array
+          default: []
+          items:
+            type: integer
+      - name: author_exclude
+        in: query
+        description: Ensure result set excludes posts assigned to specific authors.
+        style: form
+        explode: false
+        schema:
+          type: array
+          default: []
+          items:
+            type: integer
+      - name: before
+        in: query
+        description: Limit response to posts published before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: categories
+        in: query
+        description: Limit result set to items with specific terms assigned in the categories taxonomy.
+        schema:
+          type:
+          - object
+          - array
+      - name: categories_exclude
+        in: query
+        description: Limit result set to items except those with specific terms assigned in the categories taxonomy.
+        schema:
+          type:
+          - object
+          - array
+      - name: context
+        in: query
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: exclude
+        in: query
+        description: Ensure result set excludes specific IDs.
+        style: form
+        explode: false
+        schema:
+          type: array
+          default: []
+          items:
+            type: integer
+      - name: include
+        in: query
+        description: Limit result set to specific IDs.
+        style: form
+        explode: false
+        schema:
+          type: array
+          default: []
+          items:
+            type: integer
+      - name: modified_after
+        in: query
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: modified_before
+        in: query
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: offset
+        in: query
+        description: Offset the result set by a specific number of items.
+        schema:
+          type: integer
+      - name: order
+        in: query
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        description: Sort collection by post attribute.
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+      - name: page
+        in: query
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: search_columns
+        in: query
+        description: Array of column names to be searched.
+        style: form
+        explode: false
+        schema:
+          type: array
+          default: []
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+      - name: search_semantics
+        in: query
+        description: How to interpret the search input.
+        schema:
+          type: string
+          enum:
+          - exact
+      - name: slug
+        in: query
+        description: Limit result set to posts with one or more specific slugs.
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: status
+        in: query
+        description: Limit result set to posts assigned one or more statuses.
+        style: form
+        explode: false
+        schema:
+          type: array
+          default: publish
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - email_sent
+            - email_failed
+            - email_scheduled
+            - any
+      - name: tags
+        in: query
+        description: Limit result set to items with specific terms assigned in the tags taxonomy.
+        schema:
+          type:
+          - object
+          - array
+      - name: tags_exclude
+        in: query
+        description: Limit result set to items except those with specific terms assigned in the tags taxonomy.
+        schema:
+          type:
+          - object
+          - array
+      - name: tax_relation
+        in: query
+        description: Limit result set based on relationship between multiple taxonomies.
+        schema:
+          type: string
+          enum:
+          - AND
+          - OR
+      responses:
+        '200':
+          description: A list of case_study.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel=next / rel=prev).
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+      security:
+      - {}
+  /wp/v2/case_study/{id}:
+    get:
+      operationId: get_case_study
+      summary: Retrieve a case study
+      description: Retrieve a single case study by id.
+      tags:
+      - CaseStudies
+      parameters:
+      - name: id
+        in: path
+        description: Unique identifier for the post.
+        schema:
+          type: integer
+        required: true
+      - name: context
+        in: query
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: excerpt_length
+        in: query
+        description: Override the default excerpt length.
+        schema:
+          type: integer
+      - name: password
+        in: query
+        description: The password for the post if it is password protected.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The requested record.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+      security:
+      - {}
+components:
+  responses:
+    Error:
+      description: WordPress error envelope.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      description: WordPress REST API error envelope (WP_Error serialized to JSON).
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_no_route.
+        message:
+          type: string
+          description: Human-readable error message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+            params:
+              type: object
+              description: Per-parameter validation messages, when present.
+            details:
+              type: object
+              description: Per-parameter error objects, when present.
+          required:
+          - status
+      required:
+      - code
+      - message
+      examples:
+      - code: rest_no_route
+        message: No route was found matching the URL and request method.
+        data:
+          status: 404
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress Application Passwords. Advertised by the site's own route index (authentication.application-passwords.endpoints.authorization = https://vaynermedia.com/wp-admin/authorize-application.php). Required only for write operations and privileged reads; every operation in this document is callable anonymously.
