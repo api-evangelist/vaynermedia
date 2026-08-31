@@ -108,6 +108,8 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://vaynermedia.com/wp-json
   tags:
+  - Case Studies
+  tags_raw:
   - CaseStudies
   properties:
   - type: OpenAPI
@@ -316,6 +318,8 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://vaynermedia.com/wp-json
   tags:
+  - Status
+  tags_raw:
   - Statuses
   properties:
   - type: OpenAPI
@@ -368,6 +372,8 @@ apis:
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://vaynermedia.com/wp-json
   tags:
+  - taxonomies
+  tags_raw:
   - Taxonomies
   properties:
   - type: OpenAPI
