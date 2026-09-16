@@ -102,34 +102,6 @@ apis:
     url: conformance/vaynermedia-conformance.yml
   - type: APIDiscovery
     url: https://vaynermedia.com/wp-json/
-- aid: vaynermedia:vaynermedia-casestudies-api
-  name: VaynerMedia Case Studies API
-  description: VaynerMedia client case studies (custom post type).
-  humanURL: https://developer.wordpress.org/rest-api/
-  baseURL: https://vaynermedia.com/wp-json
-  tags:
-  - Case Studies
-  tags_raw:
-  - CaseStudies
-  properties:
-  - type: OpenAPI
-    url: openapi/vaynermedia-casestudies-api-openapi.yml
-  - type: Authentication
-    url: authentication/vaynermedia-authentication.yml
-  - type: Conventions
-    url: conventions/vaynermedia-conventions.yml
-  - type: ErrorCatalog
-    url: errors/vaynermedia-problem-types.yml
-  - type: DataModel
-    url: data-model/vaynermedia-data-model.yml
-  - type: Lifecycle
-    url: lifecycle/vaynermedia-lifecycle.yml
-  - type: RateLimits
-    url: rate-limits/vaynermedia-rate-limits.yml
-  - type: Conformance
-    url: conformance/vaynermedia-conformance.yml
-  - type: APIDiscovery
-    url: https://vaynermedia.com/wp-json/
 - aid: vaynermedia:vaynermedia-categories-api
   name: VaynerMedia Categories API
   description: Post categories taxonomy.
@@ -404,6 +376,32 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/vaynermedia-types-api-openapi.yml
+  - type: Authentication
+    url: authentication/vaynermedia-authentication.yml
+  - type: Conventions
+    url: conventions/vaynermedia-conventions.yml
+  - type: ErrorCatalog
+    url: errors/vaynermedia-problem-types.yml
+  - type: DataModel
+    url: data-model/vaynermedia-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/vaynermedia-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/vaynermedia-rate-limits.yml
+  - type: Conformance
+    url: conformance/vaynermedia-conformance.yml
+  - type: APIDiscovery
+    url: https://vaynermedia.com/wp-json/
+- aid: vaynermedia:vaynermedia-case-studies-api
+  name: VaynerMedia Case Studies API
+  description: VaynerMedia client case studies (custom post type).
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://vaynermedia.com/wp-json
+  tags:
+  - Case Studies
+  properties:
+  - type: OpenAPI
+    url: openapi/vaynermedia-case-studies-api-openapi.yml
   - type: Authentication
     url: authentication/vaynermedia-authentication.yml
   - type: Conventions
