@@ -3,10 +3,7 @@ info:
   title: VaynerMedia WordPress Content Popups API
   version: wp/v2
   summary: Public read surface of the WordPress REST API served at vaynermedia.com/wp-json/.
-  description: 'VaynerMedia runs vaynermedia.com on self-hosted WordPress (WP Engine) and leaves the WordPress REST API open for anonymous reads. This document describes the portion of that API that is actually callable without credentials: the wp/v2 content collections, the site''s two custom post types (case_study, salient_g_sections), the Popup Maker types, and the registry endpoints.
-
-
-    It was DERIVED from the provider''s own machine-readable route index at https://vaynermedia.com/wp-json/ (365 registered routes) on 2026-08-12 — every path, parameter, type, default and enum below is copied from that document. VaynerMedia does not publish an OpenAPI itself, and this is not a product API: it is the content surface of the agency''s marketing site. Write methods (POST/PUT/PATCH/DELETE) are registered but reject anonymous callers, and are deliberately excluded. Routes that returned 401/403 anonymously (templates, template-parts, menu-items, settings, navigation revisions, users) are excluded for the same reason.'
+  description: VaynerMedia runs vaynermedia.com on self-hosted WordPress (WP Engine) and leaves the WordPress REST API open for anonymous reads.
   contact:
     name: VaynerMedia
     url: https://vaynermedia.com/connect/
