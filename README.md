@@ -64,45 +64,118 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-VaynerMedia is an integrated strategy, creative, and media agency founded by Gary Vaynerchuk, positioning itself as "The Modern Agency of Record" with social media at the center of its practice. Headquartered in New York with roughly 2,000 employees across 15+ global offices, VaynerMedia is the flagship brand of holding company VaynerX.
+VaynerMedia is an integrated strategy, creative, and media agency founded by Gary Vaynerchuk, positioning itself as "The Modern Agency of Record" with social media at the center of its practice. Headquartered in New York with roughly 2,000 employees across offices in Los Angeles, Chattanooga, Chicago, Miami, Toronto, Amsterdam, London, Mexico City, Sydney, Mumbai, Tokyo, Kuala Lumpur, Singapore, and Bangkok, the agency serves clients including Bose, Coach, Diageo, Duracell, Indeed, Jimmy John's, Meta, Mondelez, NatWest, PepsiCo, Tinder, and Wingstop. VaynerMedia is the flagship brand of holding company VaynerX, whose portfolio also includes Gallery Media Group, ChukMedia, Tamara Group, Eva Nosidam Productions, VaynerSpeakers, Tingley Lane, and the Marketing for the Now podcast. VaynerMedia is a services agency, not an API or platform company — it does not publish a developer API, SDK, or public technology product, and its public GitHub presence (github.com/vaynermedia and github.com/vaynerx) consists primarily of forked open source libraries and internal build tooling rather than maintained API products. The one machine-readable surface VaynerMedia does serve is its own website: vaynermedia.com runs on self-hosted WordPress at WP Engine and leaves the WordPress REST API open for anonymous reads at vaynermedia.com/wp-json/, with 365 registered routes covering posts, pages, media, taxonomies and the agency's own case_study custom post type. The site also serves a Yoast-generated llms.txt. Neither is a developer product — they are the content surface of a marketing site — but both are real, public and callable, and they are what an agent researching the agency can actually read.
 
-- Website: https://vaynermedia.com/
-- Parent (VaynerX): https://vaynerx.com/
-- GitHub: https://github.com/vaynermedia, https://github.com/vaynerx
+**Areas:** Advertising · Agency · Brand Strategy · Content Production · Creative · Influencer Marketing · Marketing · Media Buying · Social Media
 
-## Offices
+## VaynerMedia on APIs.io
 
-North America: Los Angeles, New York, Chattanooga, Chicago, Miami, Toronto
-EMEA: Amsterdam, London
-LATAM: Mexico City
-APAC: Sydney, Mumbai, Tokyo, Kuala Lumpur, Singapore, Bangkok
+Everything profiled for VaynerMedia is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/vaynermedia/](https://apis.io/providers/vaynermedia/)** — or go straight to one of the APIs or properties below.
 
-## Services
+### APIs (1)
 
-Creative content, media planning & buying, brand strategy, integrated campaigns, commerce and live shopping, influencer and talent management, analytics and social signal analysis.
+- [VaynerMedia Website (WordPress REST)](https://apis.io/apis/vaynermedia/vaynermedia-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the VaynerMedia website at vaynermedia.com: the route index of the site's content management system, catalogued…
 
-## VaynerX Sister Brands
+### Published properties
 
-- [Gallery Media Group](https://gallerymediagroup.com/) — media brands portfolio
-- [ChukMedia](https://chukmedia.com/) — full-service consulting agency
-- [Tamara Group](https://tamaragroup.com/) — attention, media, and relevance agency
-- [Eva Nosidam Productions](https://evanosidam.com/) — modern storytelling production
-- [VaynerSpeakers](https://vaynerspeakers.com/) — speakers bureau
-- [Tingley Lane](https://tingleylane.com/) — inventory-driven marketing
-- [Marketing for the Now](https://vaynerx.com/marketing-for-the-now/) — podcast
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-**None.** VaynerMedia is a services agency and does not publish a developer API, SDK, or public technology product. Its GitHub presence (github.com/vaynermedia and github.com/vaynerx) consists primarily of forked open source libraries and internal build tooling (Ruby gems, asdf plugins, gRPC boilerplate) rather than maintained API products.
+Model Context Protocol servers that expose the API to agents.
 
-## Artifacts
+- [vaynermedia-mcp.yml](https://apis.io/servers/vaynermedia/vaynermedia-mcp-yml/)
 
-| Type | Count |
+#### Collections (1)
+
+Postman and Open Collection request collections.
+
+- [VaynerMedia WordPress Content API](https://apis.io/collections/vaynermedia/open-vaynermedia-wordpress-content/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Vaynermedia Wordpress Content Overlay](https://apis.io/overlays/vaynermedia/vaynermedia-wordpress-content-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Vaynermedia Authentication](https://apis.io/security/vaynermedia/vaynermedia-authentication/)
+- [Vaynermedia Domain Security](https://apis.io/security/vaynermedia/vaynermedia-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Vaynermedia Plans Pricing](https://apis.io/plans/vaynermedia/vaynermedia-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Vaynermedia Rate Limits](https://apis.io/rate-limits/vaynermedia/vaynermedia-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://vaynermedia.com/)
+- [Blog](https://vaynermedia.com/blog/)
+- [Terms of service](https://vaynermedia.com/terms/)
+- [Privacy policy](https://vaynermedia.com/privacy-policy/)
+- [GitHub](https://github.com/vaynermedia)
+
+## API Evangelist rating
+
+**Kin Score 18.4** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
 |---|---|
-| APIs | 0 |
-| OpenAPI specs | 0 |
-| Capabilities | 0 |
-| Schemas | 0 |
-| Examples | 0 |
+| Discoverability | 64.3 |
+| Contract quality | 0.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 25.6 |
+| Access clarity | 21.1 |
 
-See `apis.yml` for the full company index.
+**Agent readiness 8.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/vaynermedia/](https://apis.io/providers/vaynermedia/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for VaynerMedia: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/vaynermedia/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
